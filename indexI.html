@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset = "UTF-8">
+<title>my portfolio</title>
+<style>
+    .main {
+text-align: center;
+background-color:#9AD7E1;
+
+}
+</style>
+</head>
+<body>
+<div id="loading">
+loading.........
+</div>
+<div class = "main" id="mainContainer" hidden>
+
+<img height="130"
+width="130"
+id = "profileImage" 
+style = "border-radius: 50%;"
+
+
+>
+<h2 id = "FullName"><h2>
+<p id = "bio"></p>
+<p>“Make it work, make it right, make it fast.” – Kent Beck </p>
+<h3 id = "FollowersInformation"></h3>
+<p> check me on <a id="githubLink">Github</a></p>
+<div>
+                <button 
+                    onclick="myFunction()"
+                    style="background-color:#1494AB ; color:white; border:1px solid black; padding: 8px;"
+                >
+                    My Project
+                </button>
+                <p id="repo"></p>
+            </div>
+<a class="twitter-timeline" data-width="300" data-height="400"
+ href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a> 
+ <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<script>
+fetch("https://api.github.com/users/Rojina789")
+.then (response => response.json())
+.then (function(data){
+    console.log(data)
+    let followersCount = data['followers']
+    let followersInfo = `I have been followed by ${followersCount} people on Github`
+
+    document.getElementById('profileImage').src = data['avatar_url']
+    document.getElementById('FullName').textContent = data['name']
+    document.getElementById('bio').textContent = data['bio']
+    document.getElementById('FollowersInformation').textContent = followersInfo
+    document.getElementById('githubLink').href = data['html_url']
+    
+    
+
+    document.getElementById('mainContainer').hidden = false
+    document.getElementById('loading').hidden = true  
+
+  
+    
+
+})
+
+function myFunction(){
+
+
+fetch("https://api.github.com/users/Rojina789/repos")
+.then(response =>response.json())
+.then(function(data){
+console.log(data)
+let m = data.length;
+var n = parseInt(m);
+let repoName = "";
+for(i = 0;i < n; i++ )
+{
+repoName += " Repo " + i +" "+ data[i]['name'] +"<br>"+ "<br>";
+}
+document.getElementById('repo').innerHTML = repoName
+
+})
+}
+</script>
+
+</body>
